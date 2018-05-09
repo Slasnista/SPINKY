@@ -2,7 +2,7 @@ from scipy.io import loadmat
 import pandas as pd
 import os
 
-path = 'scores/spindles'
+path = 'scores/k_complexes'
 files = sorted(
     [os.path.join(path, f) for f in os.listdir(path)
      if "gold_standard" in f])
@@ -46,4 +46,4 @@ for sf in files:
 
             scores.append(s)
 
-pd.concat(scores).to_csv("scores/spinky_2017_gold_standard.csv")
+pd.concat(scores).to_csv("scores/spinky_2017_k_complex.csv")

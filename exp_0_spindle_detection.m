@@ -13,7 +13,7 @@ data_path = '/home/infres/schambon/Papers/mcsleep/data/mat_gold_standard/';
 
 epoch_length=30; 
 fs=256;
-thresholds = linspace(0, 250, 6);
+thresholds = linspace(0, 250, 11);
 
 
 p = parpool('local', 20); 
@@ -30,12 +30,12 @@ for k=1:numel(d)
 
   sizes = size(f.c3);
 
-  metrics_E1 = cell(5, 1);
-  metrics_E2 = cell(5, 1);
-  metrics_union = cell(5, 1);
-  metrics_intersection = cell(5, 1);
+  metrics_E1 = cell(11, 1);
+  metrics_E2 = cell(11, 1);
+  metrics_union = cell(11, 1);
+  metrics_intersection = cell(11, 1);
 
-  for i_th=2:numel(thresholds)  
+  for i_th=1:numel(thresholds)  
     th = thresholds(i_th)
 
     % run parallel prediction
@@ -56,17 +56,17 @@ for k=1:numel(d)
     end
 
     % compute metrics over differend gold standard
-    metrics_E1{i_th - 1} = compute_f1(f.E1, y_pred, fs);
-    metrics_E1{i_th - 1}.threshold = th;
+    metrics_E1{i_th} = compute_f1(f.E1, y_pred, fs);
+    metrics_E1{i_th}.threshold = th;
 
-    metrics_E2{i_th - 1} = compute_f1(f.E2, y_pred, fs);
-    metrics_E2{i_th - 1}.threshold = th;
+    metrics_E2{i_th} = compute_f1(f.E2, y_pred, fs);
+    metrics_E2{i_th}.threshold = th;
 
-    metrics_union{i_th - 1} = compute_f1(f.Union, y_pred, fs);
-    metrics_union{i_th - 1}.threshold = th;
+    metrics_union{i_th} = compute_f1(f.Union, y_pred, fs);
+    metrics_union{i_th}.threshold = th;
 
-    metrics_intersection{i_th - 1} = compute_f1(f.Intersection, y_pred, fs);
-    metrics_intersection{i_th - 1}.threshold = th;
+    metrics_intersection{i_th} = compute_f1(f.Intersection, y_pred, fs);
+    metrics_intersection{i_th}.threshold = th;
 
   end
 
