@@ -6,9 +6,8 @@ clear
 clc
 
 addpath('functions');
-addpath('../mcsleep/');
 
-%matlab -nodisplay -nosplash
+% loading data under the .mat format
 data_path = 'data/mat_files/';
 
 epoch_length=30; 

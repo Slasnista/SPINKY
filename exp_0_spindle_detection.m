@@ -6,9 +6,8 @@ clear
 clc
 
 addpath('functions');
-addpath('../mcsleep/');
 
-%matlab -nodisplay -nosplash
+% loading data under the .mat format
 data_path = '/home/infres/schambon/Papers/mcsleep/data/mat_gold_standard/';
 
 epoch_length=30; 
