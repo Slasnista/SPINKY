@@ -10,7 +10,7 @@ clc
 addpath('functions');
 
 % loop over record
-data_path = '/home/infres/schambon/Papers/mcsleep/data/SSC/mat_files/';
+data_path = '/home/infres/schambon/Papers/mcsleep/data/WSC/mat_files/';
 fil=fullfile(data_path,'*.mat')
 d=dir(fil)
 
@@ -63,7 +63,7 @@ for k=1:numel(d)
   b = a{1, end};
   c = strsplit(b, '.');
 
-  save(['scores/SSC/spindles_' c{1} '.mat'], 'metrics')
+  save(['scores/WSC/spindles_' c{1} '.mat'], 'metrics')
 
 end
 

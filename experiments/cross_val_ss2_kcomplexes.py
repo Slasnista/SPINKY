@@ -9,36 +9,37 @@ scores = []
 for sf in files:
     pass
 
-    f = loadmat(sf)
+    if ".mat" in sf:
+        f = loadmat(sf)
 
-    record = sf.split("_")[-1].split(".")[0]
+        record = sf.split("_")[-1].split(".")[0]
 
-    for i in range(f["metrics"].shape[0]):
-        for j in range(f["metrics"].shape[1]):
-            fi = f["metrics"][i, j][0, 0]
+        for i in range(f["metrics"].shape[0]):
+            for j in range(f["metrics"].shape[1]):
+                fi = f["metrics"][i, j][0, 0]
 
-            precision = fi[0]
-            recall = fi[1]
-            f1 = fi[2]
-            IoU = fi[3]
-            by_sample_precision = fi[4]
-            by_sample_recall = fi[5]
-            by_sample_f1 = fi[6]
-            threshold = fi[7]
-            # threshold = fi[8][0]
+                precision = fi[0]
+                recall = fi[1]
+                f1 = fi[2]
+                IoU = fi[3]
+                by_sample_precision = fi[4]
+                by_sample_recall = fi[5]
+                by_sample_f1 = fi[6]
+                threshold = fi[7]
+                # threshold = fi[8][0]
 
-            s = pd.DataFrame()
-            s["precision"] = precision.squeeze()
-            s["recall"] = recall.squeeze()
-            s["f1"] = f1.squeeze()
-            s["IoU"] = IoU.squeeze()
-            s["by_sample_precision"] = by_sample_precision[0, 0]
-            s["by_sample_recall"] = by_sample_recall[0, 0]
-            s["by_sample_f1"] = by_sample_f1[0, 0]
-            s["threshold"] = threshold.squeeze()
-            s["record"] = record
+                s = pd.DataFrame()
+                s["precision"] = precision.squeeze()
+                s["recall"] = recall.squeeze()
+                s["f1"] = f1.squeeze()
+                s["IoU"] = IoU.squeeze()
+                s["by_sample_precision"] = by_sample_precision[0, 0]
+                s["by_sample_recall"] = by_sample_recall[0, 0]
+                s["by_sample_f1"] = by_sample_f1[0, 0]
+                s["threshold"] = threshold.squeeze()
+                s["record"] = record
 
-            scores.append(s)
+                scores.append(s)
 
 scores = pd.concat(scores)
 scores = scores.fillna(0)

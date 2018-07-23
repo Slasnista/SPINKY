@@ -16,10 +16,11 @@ d=dir(fil)
 
 epoch_length=30; 
 fs=256;
-thresholds = linspace(0, 250, 11);
+thresholds = linspace(-100, 0, 21);
 
+warning('off','all')
 
-p = parpool('local', 20); 
+p = parpool('local', 20);
 
 for k=1:numel(d)  
   file_name=fullfile(data_path,d(k).name)
@@ -30,7 +31,7 @@ for k=1:numel(d)
 
   sizes = size(f.chan);
 
-  metrics = cell(11, 1);
+  metrics = cell(21, 1);
 
   for i_th=1:numel(thresholds)  
     th = thresholds(i_th)
@@ -38,12 +39,20 @@ for k=1:numel(d)
     % run parallel prediction
     prediction = cell(length(tr_data),1);
     parfor i=1:length(tr_data)
-      [a, b] = sp_detection(tr_data{i}, th, fs);
+      [a, b] = kc_detection(double(tr_data{i}), th, fs);
 
-      if a == 0
-        b = zeros(1, fs * epoch_length);
+      % if a == 0
+      %   b = zeros(1, fs * epoch_length);
+      % end
+      % prediction{i} = b;
+
+      b_ = zeros(1, fs * epoch_length);
+      if a ~= 0
+        for j=1:numel(b)
+          b_(max((b(j) - 0.1) * fs,1):min((b(j) + 1.3) * fs, fs * epoch_length)) = 1;
+        end
       end
-      prediction{i} = b;
+      prediction{i} = b_;
     end
 
     % create binary vector
